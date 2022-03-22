@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "allowJs": true,
+    "strict": true,
+    "jsx": "react",
+    "incremental": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es2015"],
+    "esModuleInterop": true,
+    "typeRoots": ["./types", "./node_modules/@types"], // For global types (not imported)
+    "paths": {
+      "*": ["./types/*"] // Types for import statements
+    }
+  },
+  "exclude": ["dist"]
+}

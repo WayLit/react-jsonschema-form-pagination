@@ -1,39 +1,32 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'development',
-  devtool: "eval-source-map",
-  entry: [
-    "./playground/app",
-  ],
+  devtool: 'eval-source-map',
+  entry: ['./playground/app'],
   output: {
-    path: path.join(__dirname, "build"),
-    filename: "bundle.js",
-    publicPath: "/static/"
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         include: [
-          path.resolve(__dirname, "src"),
-          path.resolve(__dirname, "playground")
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'playground')
         ],
-        exclude: [
-          path.resolve(__dirname, "node_modules"),
-        ],
+        exclude: [path.resolve(__dirname, 'node_modules')],
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader'
         }
       }
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, "playground"),
+    contentBase: path.join(__dirname, 'playground'),
     historyApiFallback: true,
     hot: true,
     lazy: false,
@@ -42,5 +35,5 @@ module.exports = {
       warnings: true,
       errors: true
     }
-  },
-};
+  }
+}
