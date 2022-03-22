@@ -1,0 +1,68 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ['14', '16']
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6
+          run_install: true
+      - run: pnpm dist
+      - run: pnpm test
+      - run: pnpm version prerelease --preid=ci-$GITHUB_RUN_ID --no-git-tag-version
+      - run: pnpm pack
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: '*.tgz'
+  publish:
+    name: 'Publish to GitHub Packages'
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'WayLit'
+    steps:
+      - name: Upload
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@waylit'
+      - run: echo "registry=https://npm.pkg.github.com/@waylit" >> .npmrc
+      - run: npm publish $(ls *.tgz)
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
