@@ -60,10 +60,10 @@ const uiSchema = {
 }
 
 test('encounter title only once', () => {
-  let ResForm = applyPagination(Form)
+  const ResForm = applyPagination(Form)
   const component = renderer.create(
     <ResForm schema={schema} uiSchema={uiSchema} />
   )
-  let tree = component.toJSON()
+  const tree = component.toJSON()
   expect(tree).toMatchSnapshot()
 })

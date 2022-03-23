@@ -1,33 +1,33 @@
-import React from "react";
-import Form from "react-jsonschema-form";
-import applyPagination from "../../src";
-import renderer from "react-test-renderer";
+import React from 'react'
+import Form from 'react-jsonschema-form'
+import applyPagination from '../../src'
+import renderer from 'react-test-renderer'
 
-let schema = {
-  type: "object",
+const schema = {
+  type: 'object',
   properties: {
     firstName: {
-      type: "string",
-      default: "",
+      type: 'string',
+      default: ''
     },
-    lastName: { type: "string" },
-  },
-};
-let uiSchema = {
-  "ui:order": ["firstName", "lastName"],
+    lastName: { type: 'string' }
+  }
+}
+const uiSchema = {
+  'ui:order': ['firstName', 'lastName'],
   firstName: {
-    classNames: "col-md-12",
-  },
-};
-let formData = {
-  firstName: "Bill",
-};
+    classNames: 'col-md-12'
+  }
+}
+const formData = {
+  firstName: 'Bill'
+}
 
-test("Initial formData rendered", () => {
-  let ResForm = applyPagination(Form);
+test('Initial formData rendered', () => {
+  const ResForm = applyPagination(Form)
   const component = renderer.create(
     <ResForm schema={schema} uiSchema={uiSchema} formData={formData} />
-  );
-  let tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
-});
+  )
+  const tree = component.toJSON()
+  expect(tree).toMatchSnapshot()
+})

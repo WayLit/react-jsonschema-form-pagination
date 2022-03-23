@@ -8,7 +8,7 @@ import Form from 'react-jsonschema-form'
 import sinon from 'sinon'
 import { fireEvent, render, screen } from '@testing-library/react'
 
-let schema = {
+const schema = {
   type: 'object',
   properties: {
     firstName: { type: 'string' },
@@ -17,7 +17,7 @@ let schema = {
   }
 }
 
-let uiSchema = {
+const uiSchema = {
   firstName: withNav('first'),
   lastName: withNav('last'),
   nickName: withNav('nick'),
@@ -28,7 +28,7 @@ let uiSchema = {
 
 test('onTabChange ignored on clicking selected', () => {
   const onNavChange = sinon.spy()
-  let ResForm = applyPagination(Form)
+  const ResForm = applyPagination(Form)
   render(
     <ResForm schema={schema} uiSchema={uiSchema} onNavChange={onNavChange} />
   )
@@ -39,7 +39,7 @@ test('onTabChange ignored on clicking selected', () => {
 
 test('onNavChange triggered on new selection', () => {
   const onNavChange = sinon.spy()
-  let ResForm = applyPagination(Form)
+  const ResForm = applyPagination(Form)
   render(
     <ResForm schema={schema} uiSchema={uiSchema} onNavChange={onNavChange} />
   )

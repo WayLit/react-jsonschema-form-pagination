@@ -5,7 +5,7 @@
 import React from 'react'
 import Form from 'react-jsonschema-form'
 import applyPagination from '../../src'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 
 const schema = {
   type: 'object',
@@ -58,13 +58,13 @@ const uiSchema = {
 
 test('Re render on activeNav property change', () => {
   let props = { schema, uiSchema, activeNav: ['1'] }
-  let ResForm = applyPagination(Form)
+  const ResForm = applyPagination(Form)
   const { rerender } = render(<ResForm {...props} />)
   props = { ...props, formData: { firstName: 'A' } }
 
   rerender(<ResForm {...props} />)
 
-  let expectedNavs = [
+  const expectedNavs = [
     { nav: '0', name: 'First' },
     { nav: '1', name: 'Second' },
     { nav: '2', name: 'Third' }

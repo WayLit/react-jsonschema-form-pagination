@@ -1,82 +1,82 @@
-import extractSubUiSchema from "../../src/splitter/extractSubUiSchema";
+import extractSubUiSchema from '../../src/splitter/extractSubUiSchema'
 
-test("extract default uiSchema", () => {
-  let origUiSchema = {
+test('extract default uiSchema', () => {
+  const origUiSchema = {
     firstName: {},
     lastName: {},
     navConf: {
-      aliases: {},
-    },
-  };
+      aliases: {}
+    }
+  }
   expect(
-    extractSubUiSchema(["firstName", "lastName"], {}, origUiSchema)
+    extractSubUiSchema(['firstName', 'lastName'], {}, origUiSchema)
   ).toEqual({
     firstName: {},
-    lastName: {},
-  });
-});
+    lastName: {}
+  })
+})
 
-test("extract with aliases", () => {
-  let uiSchema = {
+test('extract with aliases', () => {
+  const uiSchema = {
     firstName: {
-      classNames: "col-md-5",
+      classNames: 'col-md-5'
     },
     firstNameAlias: {
-      classNames: "col-md-10",
-    },
-  };
-  expect(extractSubUiSchema(["firstName"], {}, uiSchema)).toEqual({
-    firstName: { classNames: "col-md-5" },
-  });
+      classNames: 'col-md-10'
+    }
+  }
+  expect(extractSubUiSchema(['firstName'], {}, uiSchema)).toEqual({
+    firstName: { classNames: 'col-md-5' }
+  })
 
   expect(
-    extractSubUiSchema(["firstName"], { firstName: "firstNameAlias" }, uiSchema)
-  ).toEqual({ firstName: { classNames: "col-md-10" } });
-});
+    extractSubUiSchema(['firstName'], { firstName: 'firstNameAlias' }, uiSchema)
+  ).toEqual({ firstName: { classNames: 'col-md-10' } })
+})
 
-test("extract nested", () => {
+test('extract nested', () => {
   const schema = {
-    type: "object",
-    title: "Nested Pagination",
+    type: 'object',
+    title: 'Nested Pagination',
     properties: {
       general: {
-        type: "object",
+        type: 'object',
         properties: {
           firstName: {
-            type: "string",
-            title: "First name",
+            type: 'string',
+            title: 'First name'
           },
           lastName: {
-            type: "string",
-            title: "Last name",
-          },
-        },
-      },
-    },
-  };
+            type: 'string',
+            title: 'Last name'
+          }
+        }
+      }
+    }
+  }
 
   const origUiSchema = {
     general: {
-      nav: "general",
+      nav: 'general',
       firstName: {
-        nav: ["general", "First name"],
+        nav: ['general', 'First name']
       },
       lastName: {
-        nav: ["general", "Last name"],
-      },
-    },
-  };
+        nav: ['general', 'Last name']
+      }
+    }
+  }
 
   const uiSchema = {
     general: {
-      "ui:widget": "hidden",
-      "ui:field": "hidden",
-    },
-  };
+      'ui:widget': 'hidden',
+      'ui:field': 'hidden'
+    }
+  }
 
   expect(
     extractSubUiSchema(
-      ["general.firstName"],
+      ['general.firstName'],
       {},
       origUiSchema,
       uiSchema,
@@ -84,14 +84,14 @@ test("extract nested", () => {
     )
   ).toEqual({
     general: {
-      nav: "general",
+      nav: 'general',
       firstName: {
-        nav: ["general", "First name"],
+        nav: ['general', 'First name']
       },
       lastName: {
-        "ui:widget": "hidden",
-        "ui:field": "hidden",
-      },
-    },
-  });
-});
+        'ui:widget': 'hidden',
+        'ui:field': 'hidden'
+      }
+    }
+  })
+})

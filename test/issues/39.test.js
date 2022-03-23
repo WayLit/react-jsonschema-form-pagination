@@ -7,7 +7,6 @@ import Form from 'react-jsonschema-form'
 import applyPagination from '../../src'
 import sinon from 'sinon'
 import { fireEvent, render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 const schema = {
   type: 'object',
@@ -40,9 +39,9 @@ const uiSchema = {
 const INVALID_FORM_DATA = { members: [{ lastName: 'J' }] }
 
 test('Specify activeNav on error in array', () => {
-  let transformErrors = sinon.spy(errors => errors)
+  const transformErrors = sinon.spy(errors => errors)
 
-  let ResForm = applyPagination(Form)
+  const ResForm = applyPagination(Form)
   render(
     <ResForm
       schema={schema}

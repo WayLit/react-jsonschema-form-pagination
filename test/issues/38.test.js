@@ -6,7 +6,7 @@ import React from 'react'
 import Form from 'react-jsonschema-form'
 import applyPagination from '../../src'
 import sinon from 'sinon'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 
 const schema = {
   type: 'object',
@@ -65,7 +65,7 @@ const uiSchema = {
 
 test('Re render on activeNav property change', () => {
   let props = { schema, uiSchema, activeNav: ['1'] }
-  let ResForm = applyPagination(Form)
+  const ResForm = applyPagination(Form)
   const renderSpy = sinon.spy(ResForm.prototype, 'render')
   const { rerender } = render(<ResForm {...props} />)
 
