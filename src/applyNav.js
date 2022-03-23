@@ -31,7 +31,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       )
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (this.props === nextProps) {
         return
       }
