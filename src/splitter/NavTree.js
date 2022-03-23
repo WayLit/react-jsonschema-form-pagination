@@ -1,32 +1,34 @@
-import { GENERIC_NAV, findFieldNavs } from "../utils";
-import { orderNavByName, toNavConfOrDefault } from "./extractSubNavs";
-import { extractTree, findRelTree } from "./extractTree";
-import { asNavField, toHiddenUiSchema } from "./util";
-import extractSubUiSchema from "./extractSubUiSchema";
-import extractSubNavs from "./extractSubNavs";
+import { GENERIC_NAV, findFieldNavs } from '../utils'
+import extractSubNavs, {
+  orderNavByName,
+  toNavConfOrDefault
+} from './extractSubNavs'
+import { extractTree, findRelTree } from './extractTree'
+import { asNavField, toHiddenUiSchema } from './util'
+import extractSubUiSchema from './extractSubUiSchema'
 
 export default class NavTree {
   constructor(schema, uiSchema) {
-    this.tree = extractTree(schema, uiSchema);
-    this.schema = schema;
-    this.uiSchema = uiSchema;
+    this.tree = extractTree(schema, uiSchema)
+    this.schema = schema
+    this.uiSchema = uiSchema
   }
 
   updateActiveNav = (activeNavs, relTree) => {
-    relTree = relTree ? relTree : findRelTree(this.tree, activeNavs);
-    let orderedNavs = orderNavByName(Object.keys(relTree), this.uiSchema);
-    let nextNav = orderedNavs.find(nav => nav !== GENERIC_NAV);
+    relTree = relTree || findRelTree(this.tree, activeNavs)
+    const orderedNavs = orderNavByName(Object.keys(relTree), this.uiSchema)
+    const nextNav = orderedNavs.find(nav => nav !== GENERIC_NAV)
     if (nextNav) {
-      activeNavs.push(nextNav);
-      this.updateActiveNav(activeNavs, relTree[nextNav]);
+      activeNavs.push(nextNav)
+      this.updateActiveNav(activeNavs, relTree[nextNav])
     }
-  };
+  }
 
   findActiveNav = field => {
     return findFieldNavs(field, this.uiSchema).map(nav =>
       toNavConfOrDefault(nav, this.uiSchema)
-    );
-  };
+    )
+  }
 
   buildUiSchema = (
     activeNav,
@@ -37,27 +39,27 @@ export default class NavTree {
     navConfs = []
   ) => {
     if (tree[GENERIC_NAV]) {
-      let { fields, aliases } = tree[GENERIC_NAV];
+      const { fields, aliases } = tree[GENERIC_NAV]
 
-      extractSubUiSchema(fields, aliases, this.uiSchema, uiSchema, this.schema);
+      extractSubUiSchema(fields, aliases, this.uiSchema, uiSchema, this.schema)
 
       if (navConfs.length > 0) {
-        asNavField(fields[0], navConfs, uiSchema);
+        asNavField(fields[0], navConfs, uiSchema)
       }
-      navConfs = [];
+      navConfs = []
     }
 
     if (activeNav.length === pos) {
-      return uiSchema;
+      return uiSchema
     }
 
-    let nextTree = tree[activeNav[pos]];
-    let nextNavConf = extractSubNavs(
+    const nextTree = tree[activeNav[pos]]
+    const nextNavConf = extractSubNavs(
       tree,
       this.uiSchema,
       activeNav.slice(0, pos + 1),
       onNavChange
-    );
+    )
 
     return this.buildUiSchema(
       activeNav,
@@ -66,16 +68,11 @@ export default class NavTree {
       onNavChange,
       pos + 1,
       navConfs.concat(nextNavConf)
-    );
-  };
+    )
+  }
 
   toSubForms = (activeNav, onNavChange) => {
-    let hiddenUiSchema = toHiddenUiSchema(this.schema, this.uiSchema);
-    return this.buildUiSchema(
-      activeNav,
-      this.tree,
-      hiddenUiSchema,
-      onNavChange
-    );
-  };
+    const hiddenUiSchema = toHiddenUiSchema(this.schema, this.uiSchema)
+    return this.buildUiSchema(activeNav, this.tree, hiddenUiSchema, onNavChange)
+  }
 }

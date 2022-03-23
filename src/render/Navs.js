@@ -1,32 +1,32 @@
-import React from "react";
-import { GENERIC_NAV } from "../utils";
+import React from 'react'
+import { GENERIC_NAV } from '../utils'
 
 function Nav({ handleClick, isActive, name, icon }) {
   return (
-    <li onClick={handleClick} className={isActive ? "active" : null}>
+    <li onClick={handleClick} className={isActive ? 'active' : null}>
       <a>
-        {icon && <span className={icon} aria-hidden="true" />}
+        {icon && <span className={icon} aria-hidden='true' />}
         &nbsp;{name}
       </a>
     </li>
-  );
+  )
 }
 
 function Navs({ navs: { links }, onNavChange }) {
-  let relLinks = links.filter(({ nav }) => nav !== GENERIC_NAV);
+  const relLinks = links.filter(({ nav }) => nav !== GENERIC_NAV)
   return (
-    <ul className="nav nav-pills">
+    <ul className='nav nav-pills'>
       {relLinks.map(({ nav, name, icon, isActive }, i) => (
         <Nav
           key={i}
-          name={name ? name : nav}
+          name={name || nav}
           icon={icon}
           isActive={isActive}
           handleClick={() => onNavChange(nav)}
         />
       ))}
     </ul>
-  );
+  )
 }
 
-export default Navs;
+export default Navs

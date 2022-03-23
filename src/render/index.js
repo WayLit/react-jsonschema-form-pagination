@@ -1,3 +1,3 @@
-import FormWithNav from "./FormWithNav";
+import FormWithNav from './FormWithNav'
 
-export default FormWithNav;
+export default FormWithNav

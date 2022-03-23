@@ -1,3 +1,3 @@
-import applyNav from "./applyNav";
+import applyNav from './applyNav'
 
-export default applyNav;
+export default applyNav

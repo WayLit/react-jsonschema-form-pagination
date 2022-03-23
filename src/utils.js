@@ -1,47 +1,47 @@
-export const GENERIC_NAV = "default";
-export const UI_ORDER = "ui:order";
-export const UI_NAV_ID = "nav";
+export const GENERIC_NAV = 'default'
+export const UI_ORDER = 'ui:order'
+export const UI_NAV_ID = 'nav'
 
 export function findFieldNavs(field, uiSchema) {
-  let navs =
+  const navs =
     uiSchema[field] && uiSchema[field][UI_NAV_ID]
       ? uiSchema[field][UI_NAV_ID]
-      : [];
-  return toArray(navs);
+      : []
+  return toArray(navs)
 }
 
 export function getNavAliases({ navConf: { aliases = {} } = {} }) {
-  return aliases;
+  return aliases
 }
 
 export function isDevelopment() {
-  return process.env.NODE_ENV !== "production";
+  return process.env.NODE_ENV !== 'production'
 }
 
 export const toError = message => {
   if (isDevelopment()) {
-    throw new ReferenceError(message);
+    throw new ReferenceError(message)
   } else {
-    console.error(message);
+    console.error(message)
   }
-};
+}
 
 export function toArray(val) {
   if (Array.isArray(val)) {
-    return val;
+    return val
   } else {
-    return [val];
+    return [val]
   }
 }
 
 export function isEmptySchema(schema) {
   return (
     !schema || !schema.properties || Object.keys(schema.properties).length === 0
-  );
+  )
 }
 
 function isArguments(object) {
-  return Object.prototype.toString.call(object) === "[object Arguments]";
+  return Object.prototype.toString.call(object) === '[object Arguments]'
 }
 
 export function deepEquals(a, b, ca = [], cb = []) {
@@ -49,17 +49,17 @@ export function deepEquals(a, b, ca = [], cb = []) {
   // checks for functions.
   // https://github.com/othiym23/node-deeper
   if (a === b) {
-    return true;
-  } else if (typeof a === "function" || typeof b === "function") {
+    return true
+  } else if (typeof a === 'function' || typeof b === 'function') {
     // Assume all functions are equivalent
     // see https://github.com/mozilla-services/react-jsonschema-form/issues/255
-    return true;
-  } else if (typeof a !== "object" || typeof b !== "object") {
-    return false;
+    return true
+  } else if (typeof a !== 'object' || typeof b !== 'object') {
+    return false
   } else if (a === null || b === null) {
-    return false;
+    return false
   } else if (a instanceof Date && b instanceof Date) {
-    return a.getTime() === b.getTime();
+    return a.getTime() === b.getTime()
   } else if (a instanceof RegExp && b instanceof RegExp) {
     return (
       a.source === b.source &&
@@ -67,56 +67,56 @@ export function deepEquals(a, b, ca = [], cb = []) {
       a.multiline === b.multiline &&
       a.lastIndex === b.lastIndex &&
       a.ignoreCase === b.ignoreCase
-    );
+    )
   } else if (isArguments(a) || isArguments(b)) {
     if (!(isArguments(a) && isArguments(b))) {
-      return false;
+      return false
     }
-    let slice = Array.prototype.slice;
-    return deepEquals(slice.call(a), slice.call(b), ca, cb);
+    const slice = Array.prototype.slice
+    return deepEquals(slice.call(a), slice.call(b), ca, cb)
   } else {
     if (a.constructor !== b.constructor) {
-      return false;
+      return false
     }
 
-    let ka = Object.keys(a);
-    let kb = Object.keys(b);
+    const ka = Object.keys(a)
+    const kb = Object.keys(b)
     // don't bother with stack acrobatics if there's nothing there
     if (ka.length === 0 && kb.length === 0) {
-      return true;
+      return true
     }
     if (ka.length !== kb.length) {
-      return false;
+      return false
     }
 
-    let cal = ca.length;
+    let cal = ca.length
     while (cal--) {
       if (ca[cal] === a) {
-        return cb[cal] === b;
+        return cb[cal] === b
       }
     }
-    ca.push(a);
-    cb.push(b);
+    ca.push(a)
+    cb.push(b)
 
-    ka.sort();
-    kb.sort();
+    ka.sort()
+    kb.sort()
     for (let j = ka.length - 1; j >= 0; j--) {
       if (ka[j] !== kb[j]) {
-        return false;
+        return false
       }
     }
 
-    let key;
+    let key
     for (let k = ka.length - 1; k >= 0; k--) {
-      key = ka[k];
+      key = ka[k]
       if (!deepEquals(a[key], b[key], ca, cb)) {
-        return false;
+        return false
       }
     }
 
-    ca.pop();
-    cb.pop();
+    ca.pop()
+    cb.pop()
 
-    return true;
+    return true
   }
 }

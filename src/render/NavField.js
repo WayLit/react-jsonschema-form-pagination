@@ -1,22 +1,22 @@
-import React from "react";
-import { getFieldComponent, Label } from "./utils";
+import React from 'react'
+import { getFieldComponent, Label } from './utils'
 
 const navField = NavComponent => props => {
-  let {
+  const {
     schema,
     uiSchema: { navConfs, origUiSchema },
     registry: { fields },
     required,
     idSchema,
-    name,
-  } = props;
-  let FieldUI = getFieldComponent(props.schema, origUiSchema, fields);
-  let fieldConf = Object.assign({}, props, { uiSchema: origUiSchema });
+    name
+  } = props
+  const FieldUI = getFieldComponent(props.schema, origUiSchema, fields)
+  const fieldConf = Object.assign({}, props, { uiSchema: origUiSchema })
 
   return (
     <div>
       {navConfs.map((navConf, i) => (
-        <div className="col-md-12" key={i}>
+        <div className='col-md-12' key={i}>
           <NavComponent {...navConf} />
           <br />
         </div>
@@ -32,7 +32,7 @@ const navField = NavComponent => props => {
         <FieldUI {...fieldConf} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default navField;
+export default navField
