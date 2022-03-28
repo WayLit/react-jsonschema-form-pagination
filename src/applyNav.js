@@ -115,7 +115,7 @@ export default function applyPagination(FormComponent, NavComponent = Navs) {
       type: function (props, propName, componentName) {
         if (props[propName] !== 'object') {
           return new Error(
-            `Only "object" schemas supported by pagination for ${componentName}.`
+            `Only "object" schemas supported by pagination for ${componentName}. Got ${props[propName]} for ${propName}`
           )
         }
       }

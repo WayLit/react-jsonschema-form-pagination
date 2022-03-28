@@ -26,14 +26,19 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'playground'),
+    static: {
+      directory: path.resolve(__dirname, 'playground')
+    },
     historyApiFallback: true,
     hot: true,
-    lazy: false,
-    noInfo: false,
-    overlay: {
-      warnings: true,
-      errors: true
+    client: {
+      overlay: {
+        warnings: true,
+        errors: true
+      }
     }
+  },
+  experiments: {
+    lazyCompilation: true
   }
 }

@@ -1,6 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   mode: 'development',
@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        user: ExtractTextPlugin.extract('css-loader'),
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
         include: [
           path.join(__dirname, 'playground'),
           path.join(__dirname, 'node_modules')

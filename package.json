@@ -7,7 +7,7 @@
   "scripts": {
     "build:lib": "rimraf lib && cross-env NODE_ENV=production babel -d lib/ src/",
     "build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config webpack.config.dist.js --mode production",
-    "build:playground": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.prod.js --optimize-minimize && cp playground/index.prod.html build/index.html",
+    "build:playground": "rimraf build && cross-env NODE_ENV=production webpack --config webpack.config.prod.js --mode production && cp playground/index.prod.html build/index.html",
     "cs-check": "prettier -l $npm_package_prettierOptions '{playground,src,test}/**/*.js'",
     "cs-format": "prettier $npm_package_prettierOptions '{playground,src,test}/**/*.js' --write",
     "dist": "npm run build:lib && npm run build:dist",
