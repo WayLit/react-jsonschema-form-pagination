@@ -50,13 +50,15 @@ exports[`encounter title only once 1`] = `
             className="col-md-12"
           >
             <ul
-              className="nav nav-pills"
+              className="nav navbar-nav"
             >
               <li
-                className="active"
+                className="nav-item active"
                 onClick={[Function]}
               >
-                <a>
+                <a
+                  className="nav-link"
+                >
                   <span
                     aria-hidden="true"
                     className="fa fa-search"
@@ -66,19 +68,23 @@ exports[`encounter title only once 1`] = `
                 </a>
               </li>
               <li
-                className={null}
+                className="nav-item "
                 onClick={[Function]}
               >
-                <a>
+                <a
+                  className="nav-link"
+                >
                    
                   1
                 </a>
               </li>
               <li
-                className={null}
+                className="nav-item "
                 onClick={[Function]}
               >
-                <a>
+                <a
+                  className="nav-link"
+                >
                    
                   2
                 </a>
@@ -90,22 +96,26 @@ exports[`encounter title only once 1`] = `
             className="col-md-12"
           >
             <ul
-              className="nav nav-pills"
+              className="nav navbar-nav"
             >
               <li
-                className="active"
+                className="nav-item active"
                 onClick={[Function]}
               >
-                <a>
+                <a
+                  className="nav-link"
+                >
                    
                   lastName
                 </a>
               </li>
               <li
-                className={null}
+                className="nav-item "
                 onClick={[Function]}
               >
-                <a>
+                <a
+                  className="nav-link"
+                >
                    
                   firstName
                 </a>
