@@ -3,8 +3,11 @@ import { GENERIC_NAV } from '../utils'
 
 function Nav({ handleClick, isActive, name, icon }) {
   return (
-    <li onClick={handleClick} className={isActive ? 'active' : null}>
-      <a>
+    <li
+      onClick={handleClick}
+      className={`nav-item ${isActive ? 'active' : ''}`}
+    >
+      <a className='nav-link'>
         {icon && <span className={icon} aria-hidden='true' />}
         &nbsp;{name}
       </a>
@@ -15,7 +18,7 @@ function Nav({ handleClick, isActive, name, icon }) {
 function Navs({ navs: { links }, onNavChange }) {
   const relLinks = links.filter(({ nav }) => nav !== GENERIC_NAV)
   return (
-    <ul className='nav nav-pills'>
+    <ul className='nav navbar-nav'>
       {relLinks.map(({ nav, name, icon, isActive }, i) => (
         <Nav
           key={i}
