@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = {
   mode: 'production',
   cache: true,
-  context: path.resolve(__dirname, '/src'),
+  context: path.resolve(__dirname, './src'),
   entry: './index.js',
   output: {
     publicPath: '/dist/',
